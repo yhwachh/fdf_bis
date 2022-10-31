@@ -1,78 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/26 14:54:08 by ibalbako          #+#    #+#             */
+/*   Updated: 2022/10/26 14:55:40 by ibalbako         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-static int		words(char const *str, char c)
+static int	ft_wordcount(char const *s, char c)
 {
-	int i;
-	int words;
+	int		word_count;
+	int		i;
 
-	words = 0;
 	i = 0;
-	while (str[i])
+	word_count = 0;
+	while (s[i] != '\0')
 	{
-		while (str[i] == c && str[i] != '\0')
+		while (s[i] == c)
 			i++;
-		if (str[i])
-			words++;
-		while (str[i] != c && str[i] != '\0')
+		if (s[i] != '\0')
+			word_count++;
+		while (s[i] != c && s[i] != '\0')
 			i++;
 	}
-	return (words);
+	return (word_count);
 }
 
-static char		**memory_giver(char const *str, char c)
+static void	*ft_taballoc(char const *s, char **str_tab, char c)
 {
-	char	**res;
-	int		letters;
 	int		i;
-	int		j;
+	int		wl;
 
-	if ((res = (char **)malloc(sizeof(char*) * (words(str, c) + 1))) == NULL)
-		return (NULL);
 	i = 0;
-	j = 0;
-	while (str[i])
+	while (s[i])
 	{
-		letters = 0;
-		while (str[i] == c && str[i])
+		wl = 0;
+		while (s[i] == c && s[i] != '\0')
 			i++;
-		while (str[i] != c && str[i] != '\0')
+		while (s[i] != c && s[i] != '\0')
 		{
-			letters++;
+			wl++;
 			i++;
 		}
-		if (letters > 0)
-			if ((res[j++] = (char *)malloc(sizeof(char) * letters + 1)) == NULL)
-				return (NULL);
+		if (wl != 0)
+			*str_tab++ = (char *)malloc((wl + 1) * sizeof(char));
+		if (!(str_tab - 1))
+			return (NULL);
 	}
-	res[j] = 0;
-	return (res);
+	return (*str_tab);
 }
 
-char			**ft_strsplit(char const *str, char c)
+char	**ft_strsplit(char const *s, char c)
 {
-	char	**res;
+	char	**str_tab;
 	int		i;
-	int		j;
-	int		str_number;
-	int		size;
+	int		i2;
+	int		i3;
+	int		wc;
 
-	if (str == NULL)
-		return (NULL);
-	size = words(str, c);
-	res = memory_giver(str, c);
-	if (res == NULL)
-		return (NULL);
 	i = 0;
-	str_number = 0;
-	while (str_number < size)
+	i3 = 0;
+	wc = ft_wordcount(s, c);
+	str_tab = (char **)malloc((wc + 1) * sizeof(char *));
+	if (!str_tab)
+		return (NULL);
+	ft_taballoc(s, str_tab, c);
+	while (i != wc)
 	{
-		while (str[i] == c && str[i])
-			i++;
-		j = 0;
-		while (str[i] != c && str[i])
-			res[str_number][j++] = str[i++];
-		res[str_number][j] = '\0';
-		str_number++;
+		i2 = 0;
+		while (s[i3] == c && s[i3] != '\0')
+			i3++;
+		while (s[i3] != c && s[i3] != '\0')
+			str_tab[i][i2++] = s[i3++];
+		str_tab[i][i2] = '\0';
+		i++;
 	}
-	return (res);
+	str_tab[i] = NULL;
+	return (str_tab);
 }

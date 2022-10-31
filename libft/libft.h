@@ -6,7 +6,7 @@
 /*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 10:14:31 by ibalbako          #+#    #+#             */
-/*   Updated: 2022/03/09 11:30:28 by ibalbako         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:59:54 by ibalbako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <string.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-#  define BUFFER_SIZE 1
-
+# define BUFFER_SIZE 1
 
 int		ft_toupper(int c);
 int		ft_tolower(int c);
@@ -62,7 +61,6 @@ char	**ft_strsplit(char const *s, char c);
 char	*get_next_line(int fd);
 char	*ft_strjoin2(char *s1, char *s2);
 int		ft_wdcounter(char const *str, char c);
-
 
 typedef struct s_list
 {

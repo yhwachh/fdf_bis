@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "algorithm": "c",
+        "cmath": "c",
+        "unordered_map": "c",
+        "utility": "c"
+    }
+}

@@ -1,14 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utills.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/26 14:19:46 by ibalbako          #+#    #+#             */
+/*   Updated: 2022/10/26 14:19:49 by ibalbako         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
-float	mod(float i)
+void	color(int z1, int z, t_fdf *data)
 {
-	return ((i < 0) ? -i : i);
+	if (z1 || z)
+		data->color = 0x0080FF;
+	else
+		data->color = 0xFF8000;
 }
 
-float	max1(float a, float b)
+void	color2(int z, int z1, t_fdf *data)
 {
-	return (a > b ? a : b);
+	if (z || z1)
+		data->color = 0xFF8000;
+	else
+		data->color = 0x0080FF;
 }
 
 void	isometric(float *x, float *y, int z, double angle)

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/26 14:18:17 by ibalbako          #+#    #+#             */
+/*   Updated: 2022/10/26 14:23:44 by ibalbako         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
-int		buttons(int key, t_fdf *data)
+int	buttons(int key, t_fdf *data)
 {
 	if (key == 126)
 		data->shift_y -= 10;
@@ -11,24 +22,28 @@ int		buttons(int key, t_fdf *data)
 		data->shift_x -= 10;
 	else if (key == 124)
 		data->shift_x += 10;
-	else if (key == 86 || key == 21)
-		data->angle += 0.05;
-	else if (key == 88 || key == 22)
-		data->angle -= 0.05;
-	else if (key == 91 || key == 28)
+	else if (key == 24)
 		data->zoom += 1;
-	else if (key == 84 || key == 19)
+	else if (key == 27)
 		data->zoom -= 1;
-	else if (key == 92 || key == 25)
+	else if (key == 12)
 		data->z_scale += 1;
-	else if (key == 85 || key == 20)
+	else if (key == 13)
 		data->z_scale -= 1;
 	else
 		return (0);
 	return (1);
 }
 
-int		deal_key(int key, t_fdf *data)
+float	max1(float a, float b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+int	deal_key(int key, t_fdf *data)
 {
 	if (buttons(key, data))
 	{
@@ -44,9 +59,17 @@ int		deal_key(int key, t_fdf *data)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int	ft_close(t_fdf *data)
 {
-	t_fdf data;
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	free(data);
+	exit(0);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_fdf	data;
 
 	if (argc != 2)
 	{
@@ -54,9 +77,10 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	read_map(argv[1], &data);
-	default_param(&data);
+	init_param(&data);
 	draw(&data);
 	mlx_key_hook(data.win_ptr, deal_key, &data);
+	mlx_hook(data.win_ptr, 17, 0, ft_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

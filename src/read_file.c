@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/26 14:19:31 by ibalbako          #+#    #+#             */
+/*   Updated: 2022/10/26 14:35:49 by ibalbako         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
-int		ft_wdcounter(char const *str, char c)
+int	ft_wdcounter(char const *str, char c)
 {
 	int		words;
 	int		i;
@@ -20,18 +31,14 @@ int		ft_wdcounter(char const *str, char c)
 	return (words);
 }
 
-int		get_height(char *name)
+int	get_height(char *name)
 {
 	char	*line;
 	int		fd;
 	int		height;
 
-	if ((fd = open(name, O_DIRECTORY | O_RDONLY)) > 0)
-	{
-		ft_putstr_fd("this is directory\n", 1);
-		exit(0);
-	}
-	if ((fd = open(name, O_RDONLY, 0)) <= 0)
+	fd = open(name, O_RDONLY, 0);
+	if (fd == -1)
 	{
 		ft_putstr_fd("file does not exist or permission denied\n", 1);
 		exit(0);
@@ -48,13 +55,14 @@ int		get_height(char *name)
 	return (height);
 }
 
-int		get_width(char *name)
+int	get_width(char *name)
 {
 	int		width;
 	int		fd;
 	char	*line;
 
-	if ((fd = open(name, O_RDONLY, 0)) <= 0)
+	fd = open(name, O_RDONLY, 0);
+	if (fd == -1)
 	{
 		ft_putstr_fd("file does not exist or permission denied\n", 1);
 		exit(0);
@@ -65,11 +73,6 @@ int		get_width(char *name)
 	line = get_next_line(fd);
 	while (line > 0)
 	{
-		if (ft_wdcounter(line, ' ') != width)
-		{
-			ft_putstr_fd("Invalid map\n", 1);
-			exit(0);
-		}
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -102,10 +105,10 @@ void	read_map(char *name, t_fdf *data)
 
 	data->height = get_height(name);
 	data->width = get_width(name);
-	data->z = (int **)malloc(sizeof(int*) * (data->height + 1));
+	data->z = (int **)malloc(sizeof(int *) * (data->height + 1));
 	i = 0;
 	while (i < data->height)
-		data->z[i++] = (int*)malloc(sizeof(int) * (data->width + 1));
+		data->z[i++] = (int *)malloc(sizeof(int) * (data->width + 1));
 	fd = open(name, O_RDONLY, 0);
 	i = 0;
 	line = get_next_line(fd);

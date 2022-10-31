@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   init_param.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/26 12:39:45 by ibalbako          #+#    #+#             */
-/*   Updated: 2022/03/07 14:53:29 by ibalbako         ###   ########.fr       */
+/*   Created: 2022/10/26 14:18:51 by ibalbako          #+#    #+#             */
+/*   Updated: 2022/10/26 14:18:54 by ibalbako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fdf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	init_param(t_fdf *data)
 {
-	char	*str;
-	char	*res;
-	size_t	len;
-
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	res = str;
-	while (*s1)
-	{
-		*str = *s1;
-		str++;
-		s1++;
-	}
-	while (*s2)
-	{
-		*str = *s2;
-		str++;
-		s2++;
-	}
-	*str = '\0';
-	return (res);
+	data->angle = 0.6;
+	data->zoom = 50;
+	data->z_scale = 1;
+	data->shift_x = 2000 / 3;
+	data->shift_y = 1000 / 3;
+	data->mlx_ptr = mlx_init();
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 2000, 1000, "FDF");
 }

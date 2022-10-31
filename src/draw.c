@@ -1,5 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibalbako <ibalbako@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/26 14:18:07 by ibalbako          #+#    #+#             */
+/*   Updated: 2022/10/26 14:21:52 by ibalbako         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
+
+float	mod(float i)
+{
+	if (i < 0)
+		return (-i);
+	return (i);
+}
 
 void	draw_pixels(float *x, float *y, t_fdf *data)
 {
@@ -22,7 +40,7 @@ void	bresenham_w(float x, float y, t_fdf *data)
 	z1 = data->z[(int)y1][(int)x1] * data->z_scale;
 	zoom(&x, &y, data->zoom);
 	zoom(&x1, &y1, data->zoom);
-	data->color = (z || z1) ? 0xFF8000 : 0x0080FF;
+	color2(z1, z, data);
 	isometric(&x, &y, z, data->angle);
 	isometric(&x1, &y1, z1, data->angle);
 	shift(&x, &y, data->shift_x, data->shift_y);
@@ -50,7 +68,7 @@ void	bresenham_h(float x, float y, t_fdf *data)
 	z1 = data->z[(int)y1][(int)x1] * data->z_scale;
 	zoom(&x, &y, data->zoom);
 	zoom(&x1, &y1, data->zoom);
-	data->color = (z || z1) ? 0xFF8000 : 0x0080FF;
+	color2(z, z1, data);
 	isometric(&x, &y, z, data->angle);
 	isometric(&x1, &y1, z1, data->angle);
 	shift(&x, &y, data->shift_x, data->shift_y);
